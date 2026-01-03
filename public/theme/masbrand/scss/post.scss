@@ -1,0 +1,85 @@
+// Brand Colors
+$brand-color: #101010;
+$primary: $brand-color;
+$secondary: #4a4a4a;
+$body-bg: #f4f6f8;
+
+// Navbar
+.navbar-bootswatch {
+    background-color: $brand-color !important;
+    border-bottom: 1px solid lighten($brand-color, 10%);
+}
+
+// Logo integration in Navbar
+.navbar-brand {
+    background-image: url('[[pix:theme|logo]]');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 150px; 
+    height: 50px;
+    text-indent: -9999px; /* Hide text if using image */
+}
+
+// Hide Moodle Docs link if it appears
+.tool_usertours-resettourcontainer,
+.logininfo a[href*="moodle.org"] {
+    display: none !important;
+}
+
+// Primary actions
+.btn-primary {
+    background-color: $brand-color;
+    border-color: $brand-color;
+    transition: all 0.3s ease;
+    
+    &:hover, &:focus, &:active {
+        background-color: lighten($brand-color, 15%) !important;
+        border-color: lighten($brand-color, 15%) !important;
+    }
+}
+
+// Login Page customization
+#page-login-index {
+    background-color: $brand-color;
+    background-image: none; // Ensure no default Moodle bg
+    
+    .card {
+        border: none;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        border-radius: 12px;
+        .card-header {
+             background-color: transparent;
+             img {
+                // If the logo is an img tag in the header
+                display: none; // We might want to replace it or ensure it uses ours
+             }
+             // Add our logo via pseudo-element if needed, or rely on custom layout
+             &:before {
+                content: "";
+                display: block;
+                background-image: url('[[pix:theme|logo]]');
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center;
+                height: 80px;
+                width: 100%;
+                margin-bottom: 20px;
+             }
+        }
+    }
+    
+    // Hide "Cookies must be enabled" if it links to Moodle docs nicely?
+    // Usually it's fine, but let's hide "Moodle" text references via CSS if any specific classes exist.
+}
+
+// Footer
+#page-footer {
+    background-color: darken($brand-color, 2%);
+    color: #ccc;
+    
+    .footer-content {
+        text-align: center;
+        padding: 20px;
+    }
+}

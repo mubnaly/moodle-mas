@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: moodle_app
+    ports:
+      - "8080:80"
+    volumes:
+      - moodle_data:/var/www/moodledata
+      - .:/var/www/html
+    environment:
+      - MOODLE_DBTYPE=pgsql
+      - MOODLE_DBHOST=db
+      - MOODLE_DBNAME=moodle
+      - MOODLE_DBUSER=moodleuser
+      - MOODLE_DBPASSWORD=moodlepass
+      - MOODLE_DOCKER_DEMO_PERFORMANCE=1
+    depends_on:
+      - db
+      - redis
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/healthcheck.php"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: always
+
+  db:
+    image: postgres:14-alpine
+    container_name: moodle_db
+    environment:
+      - POSTGRES_DB=moodle
+      - POSTGRES_USER=moodleuser
+      - POSTGRES_PASSWORD=moodlepass
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U moodleuser -d moodle"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+
+  redis:
+    image: redis:alpine
+    container_name: moodle_redis
+    restart: always
+
+volumes:
+  moodle_data:
+  postgres_data:

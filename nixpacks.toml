@@ -1,0 +1,14 @@
+# install PHP + Apache + extensions
+providers = ["php", "apache"]
+
+# PHP version
+php.version = "8.3"
+
+# Apache document root
+apache.documentRoot = "/app"
+
+# PHP extensions
+php.extensions = ["mysqli", "pdo_mysql", "mbstring", "xml", "curl", "gd", "intl", "zip", "opcache"]
+
+# run Apache (not npm)
+startCmd = "apache2-foreground"
