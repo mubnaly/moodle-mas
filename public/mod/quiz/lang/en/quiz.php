@@ -395,6 +395,7 @@ $string['eventsectionshuffleupdated'] = 'Section shuffle updated';
 $string['eventslotcreated'] = 'Slot created';
 $string['eventslotdeleted'] = 'Slot deleted';
 $string['eventslotdisplayedquestionnumberupdated'] = 'Slot displayed question number updated';
+$string['eventslotfilterconditionupdated'] = 'Slot filter condition updated';
 $string['eventslotgradeitemupdated'] = 'Slot grade item updated';
 $string['eventslotmarkupdated'] = 'Slot mark updated';
 $string['eventslotversionupdated'] = 'Slot version updated';
@@ -477,7 +478,7 @@ $string['gradingdetailspenalty'] = 'This submission attracted a penalty of {$a}.
 $string['gradingdetailszeropenalty'] = 'You were not penalized for this submission.';
 $string['gradingmethod'] = 'Grading method: {$a}';
 $string['groupoverrides'] = 'Group overrides';
-$string['groupsnone'] = 'No groups you can access.';
+$string['groupsnone'] = 'There are no groups in this course.';
 $string['guestsno'] = 'Sorry, guests cannot see or attempt quizzes';
 $string['hidebreaks'] = 'Hide page breaks';
 $string['hidereordertool'] = 'Hide the reordering tool';
@@ -566,22 +567,22 @@ $string['missingcorrectanswer'] = 'Correct answer must be specified';
 $string['missingitemtypename'] = 'Missing name';
 $string['missingquestion'] = 'This question no longer seems to exist';
 $string['modulename'] = 'Quiz';
-$string['modulename_help'] = 'The quiz activity enables a teacher to create quizzes comprising questions of various types, including multiple choice, matching, short-answer and numerical.
+$string['modulename_help'] = '###### Key features
+- Use different question types, such as multiple choice, true/false, matching, essay, and more
+- Grade most question types automatically, with manual grading for essays
+- Make each attempt unique by randomising questions and shuffling answer choices.
+- Set time limits to complete a quiz, and decide when students can see hints, feedback, or correct answers
+- Save and reuse questions across different Quiz activities and courses
+- Create secure online exam environments
 
-The teacher can allow the quiz to be attempted multiple times, with the questions shuffled or randomly selected from the question bank. A time limit may be set.
-
-Each attempt is marked automatically, with the exception of essay questions, and the grade is recorded in the gradebook.
-
-The teacher can choose when and if hints, feedback and correct answers are shown to students.
-
-Quizzes may be used
-
-* As course exams
-* As mini tests for reading assignments or at the end of a topic
-* As exam practice using questions from past exams
-* To deliver immediate feedback about performance
-* For self-assessment';
+###### Ways to use it
+- Deliver a timed exam with automatic grading
+- Provide a practice test with questions randomly drawn from a pool
+- Create a self-assessment with detailed feedback for each answer
+- Run short weekly quizzes to check understanding of topics';
 $string['modulename_link'] = 'mod/quiz/view';
+$string['modulename_summary'] = 'Create a variety of assessments, from simple multiple-choice tests to complex exams with detailed feedback.';
+$string['modulename_tip'] = 'Create your questions in the question bank first to reuse them easily in multiple quizzes.';
 $string['modulenameplural'] = 'Quizzes';
 $string['moveselectedonpage'] = 'Move selected questions to page: {$a}';
 $string['multichoice'] = 'Multiple choice';
@@ -694,8 +695,8 @@ $string['overridemultiplerecordsexist'] = 'Multiple overrides cannot be made for
 $string['overridemustsetuserorgroup'] = 'A user or group must be set.';
 $string['overrides'] = 'Overrides';
 $string['overridesforquiz'] = 'Settings overrides: {$a}';
-$string['overridesnoneforgroups'] = 'No group settings overrides have been created for this quiz.';
-$string['overridesnoneforusers'] = 'No user settings overrides have been created for this quiz.';
+$string['overridesnoneforgroups'] = 'There are no group overrides for this quiz.';
+$string['overridesnoneforusers'] = 'There are no user overrides for this quiz.';
 $string['overridessummary'] = 'Settings overrides exist ({$a})';
 $string['overridessummarythisgroup'] = 'Settings overrides exist ({$a}) for this group';
 $string['overridessummaryyourgroups'] = 'Settings overrides exist ({$a}) for your groups';
@@ -1136,7 +1137,7 @@ $string['upgradingveryoldquizattempts'] = 'Upgrading very old quiz attempts: {$a
 $string['url'] = 'URL';
 $string['usedcategorymoved'] = 'This category has been preserved and moved to the site level because it is a published category still in use by other courses.';
 $string['useroverrides'] = 'User overrides';
-$string['usersnone'] = 'No students have access to this quiz';
+$string['usersnone'] = 'There are no users enrolled in this course.';
 $string['validate'] = 'Validate';
 $string['viewallanswers'] = 'View {$a} quiz attempts';
 $string['viewallreports'] = 'View reports for {$a} attempts';

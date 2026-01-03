@@ -345,7 +345,7 @@ $string['gradingstatus'] = 'Grading status';
 $string['gradingstudent'] = 'Grading student';
 $string['gradingsummary'] = 'Grading summary';
 $string['groupoverrides'] = 'Group overrides';
-$string['groupsnone'] = 'No groups you can access.';
+$string['groupsnone'] = 'There are no groups in this course.';
 $string['hidegrader'] = 'Hide grader identity from students';
 $string['hidegrader_help'] = 'If enabled, the identity of any user who grades an assignment submission is not shown, so students can\'t see who marked their work.
 
@@ -414,12 +414,19 @@ $string['messageprovider:assign_due_soon'] = 'Assignment due soon notification';
 $string['messageprovider:assign_overdue'] = 'Assignment overdue notification';
 $string['messageprovider:assign_notification'] = 'Assignment notifications';
 $string['modulename'] = 'Assignment';
-$string['modulename_help'] = 'The assignment activity module enables a teacher to communicate tasks, collect work and provide grades and feedback.
+$string['modulename_help'] = '###### Key features
+- Provide instructions and requirements for the assignment
+- Allow students to submit any kind of file or type directly into an online text editor
+- Manage deadlines and control whether late submissions are accepted
+- Use rubrics or marking guides to give grades and feedback
+- Students can submit individually or in groups
 
-Students can submit any digital content (files), such as word-processed documents, spreadsheets, images, or audio and video clips. Alternatively, or in addition, the assignment may require students to type text directly into the text editor. An assignment can also be used to remind students of \'real-world\' assignments they need to complete offline, such as art work, and thus not require any digital content. Students can submit work individually or as a member of a group.
-
-When reviewing assignments, teachers can leave feedback comments and upload files, such as marked-up student submissions, documents with comments or spoken audio feedback. Assignments can be graded using a numerical or custom scale or an advanced grading method such as a rubric. Final grades are recorded in the gradebook.';
+###### Ways to use it
+- Collect essays or coursework for feedback and grading
+- Set group tasks where students submit one shared presentation
+- Record and grade offline work, such as a classroom performance or field trips';
 $string['modulename_link'] = 'mod/assignment/view';
+$string['modulename_summary'] = 'Collect student submissions such as essays, reports, or projects, and provide feedback and grades.';
 $string['modulenameplural'] = 'Assignments';
 $string['moreusers'] = '{$a} more...';
 $string['multipleteams'] = 'Member of more than one group';
@@ -694,7 +701,7 @@ $string['userassignmentdefaults'] = 'User assignment defaults';
 $string['useridlistnotcached'] = 'The grade changes were NOT saved, as it was not possible to determine which submission they were for.';
 $string['useroverrides'] = 'User overrides';
 $string['usersubmissioncannotberemoved'] = 'The submission of {$a} cannot be removed.';
-$string['usersnone'] = 'No students have access to this assignment.';
+$string['usersnone'] = 'There are no users enrolled in this course.';
 $string['userswhoneedtosubmit'] = 'Users who need to submit: {$a}';
 $string['usergrade'] = 'User grade';
 $string['validmarkingworkflowstates'] = 'Valid marking workflow states';
