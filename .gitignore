@@ -60,3 +60,44 @@ phpcs.xml
 jsconfig.json
 UPGRADING-CURRENT.md
 .phpunit.cache
+
+# ==============================================================================
+# Docker & Deployment
+# ==============================================================================
+.env
+.env.local
+.env.generated
+*.env
+docker-compose.override.yml
+
+# Moodle data (should never be committed)
+moodledata/
+/moodledata
+
+# Generated files
+.env.generated
+
+# Logs
+*.log
+logs/
+
+# Backups
+*.sql
+*.sql.gz
+backups/
+
+# IDE specific (additional)
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# OS specific
+Thumbs.db
+.DS_Store
+
+# Secrets
+*.pem
+*.key
+*.crt
+secrets/

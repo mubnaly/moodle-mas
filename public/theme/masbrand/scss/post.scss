@@ -1,61 +1,270 @@
-// Brand Colors
-$brand-color: #101010;
-$primary: $brand-color;
-$secondary: #4a4a4a;
-$body-bg: #f4f6f8;
+// ==============================================================================
+// MasBrand Theme - Main SCSS Styles
+// Production-ready with modern design and white-label support
+// ==============================================================================
 
-// Navbar
-.navbar-bootswatch {
-    background-color: $brand-color !important;
-    border-bottom: 1px solid lighten($brand-color, 10%);
+// ==============================================================================
+// Typography - Google Fonts
+// ==============================================================================
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+// ==============================================================================
+// Brand Colors - Customize these for your brand
+// ==============================================================================
+$brand-color: #2563EB;           // Primary brand color
+$brand-color-light: #3B82F6;     // Lighter shade
+$brand-color-dark: #1D4ED8;      // Darker shade
+
+$secondary-color: #10B981;        // Secondary/accent color
+$secondary-light: #34D399;
+$secondary-dark: #059669;
+
+// Override Bootstrap/Boost variables
+$primary: $brand-color;
+$secondary: $secondary-color;
+$body-bg: #F8FAFC;
+$body-color: #1E293B;
+
+// Status colors
+$success: #22C55E;
+$warning: #F59E0B;
+$danger: #EF4444;
+$info: #3B82F6;
+
+// ==============================================================================
+// Typography
+// ==============================================================================
+$font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+$font-family-heading: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+$font-size-base: 1rem;
+$line-height-base: 1.6;
+
+body {
+    font-family: $font-family-base;
+    background-color: $body-bg;
+    color: $body-color;
+    line-height: $line-height-base;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-// Logo integration in Navbar
+h1, h2, h3, h4, h5, h6 {
+    font-family: $font-family-heading;
+    font-weight: 600;
+    color: #0F172A;
+}
+
+// ==============================================================================
+// Theme Variables
+// ==============================================================================
+$border-radius-base: 8px;
+$border-radius-lg: 12px;
+$border-radius-sm: 4px;
+$navbar-height: 60px;
+$sidebar-width: 285px;
+$box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$box-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+$transition-base: all 0.2s ease-in-out;
+
+// ==============================================================================
+// Navbar Styling
+// ==============================================================================
+.navbar-bootswatch,
+.navbar,
+#page-header {
+    background-color: #1E293B !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: $box-shadow;
+}
+
 .navbar-brand {
     background-image: url('[[pix:theme|logo]]');
     background-size: contain;
     background-repeat: no-repeat;
-    background-position: center;
-    width: 150px; 
-    height: 50px;
-    text-indent: -9999px; /* Hide text if using image */
-}
-
-// Hide Moodle Docs link if it appears
-.tool_usertours-resettourcontainer,
-.logininfo a[href*="moodle.org"] {
-    display: none !important;
-}
-
-// Primary actions
-.btn-primary {
-    background-color: $brand-color;
-    border-color: $brand-color;
-    transition: all 0.3s ease;
+    background-position: center left;
+    width: 180px;
+    height: 45px;
+    text-indent: -9999px;
+    transition: $transition-base;
     
-    &:hover, &:focus, &:active {
-        background-color: lighten($brand-color, 15%) !important;
-        border-color: lighten($brand-color, 15%) !important;
+    &:hover {
+        opacity: 0.9;
     }
 }
 
-// Login Page customization
-#page-login-index {
+.nav-link {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem !important;
+    transition: $transition-base;
+    border-radius: $border-radius-sm;
+    
+    &:hover, &:focus {
+        color: #FFFFFF !important;
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+}
+
+// User menu
+.usermenu {
+    .dropdown-toggle {
+        &:after {
+            color: rgba(255, 255, 255, 0.7);
+        }
+    }
+}
+
+// ==============================================================================
+// Buttons
+// ==============================================================================
+.btn {
+    font-weight: 500;
+    border-radius: $border-radius-base;
+    padding: 0.5rem 1.25rem;
+    transition: $transition-base;
+    border: none;
+    
+    &:focus {
+        box-shadow: 0 0 0 3px rgba($brand-color, 0.25);
+    }
+}
+
+.btn-primary {
     background-color: $brand-color;
-    background-image: none; // Ensure no default Moodle bg
+    color: #FFFFFF;
+    
+    &:hover, &:focus, &:active {
+        background-color: $brand-color-dark !important;
+        box-shadow: 0 4px 12px rgba($brand-color, 0.4);
+        transform: translateY(-1px);
+    }
+    
+    &:active {
+        transform: translateY(0);
+    }
+}
+
+.btn-secondary {
+    background-color: $secondary-color;
+    color: #FFFFFF;
+    
+    &:hover, &:focus, &:active {
+        background-color: $secondary-dark !important;
+    }
+}
+
+.btn-outline-primary {
+    color: $brand-color;
+    border: 2px solid $brand-color;
+    background-color: transparent;
+    
+    &:hover, &:focus {
+        background-color: $brand-color;
+        color: #FFFFFF;
+    }
+}
+
+.btn-outline-secondary {
+    color: #64748B;
+    border: 2px solid #E2E8F0;
+    background-color: transparent;
+    
+    &:hover, &:focus {
+        background-color: #F1F5F9;
+        border-color: #CBD5E1;
+        color: #334155;
+    }
+}
+
+// ==============================================================================
+// Cards
+// ==============================================================================
+.card {
+    border-radius: $border-radius-lg;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: $transition-base;
+    overflow: hidden;
+    background-color: #FFFFFF;
+    
+    &:hover {
+        box-shadow: $box-shadow-lg;
+        transform: translateY(-2px);
+    }
+    
+    .card-header {
+        background-color: #FFFFFF;
+        border-bottom: 1px solid #F1F5F9;
+        font-weight: 600;
+        padding: 1rem 1.25rem;
+    }
+    
+    .card-body {
+        padding: 1.25rem;
+    }
+    
+    .card-footer {
+        background-color: #FAFAFA;
+        border-top: 1px solid #F1F5F9;
+    }
+}
+
+// Course cards
+.course-card,
+.dashboard-card,
+.coursebox {
+    border-radius: $border-radius-lg;
+    overflow: hidden;
+    transition: $transition-base;
+    
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+    }
+    
+    .course-card-img,
+    .courseimage img {
+        height: 160px;
+        object-fit: cover;
+        width: 100%;
+    }
+    
+    .coursename {
+        font-weight: 600;
+        color: #1E293B;
+    }
+}
+
+// ==============================================================================
+// Login Page
+// ==============================================================================
+#page-login-index {
+    background: linear-gradient(135deg, $brand-color 0%, darken($brand-color, 20%) 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    #page-wrapper {
+        background: transparent;
+    }
     
     .card {
         border: none;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        border-radius: 12px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        border-radius: 16px;
+        backdrop-filter: blur(10px);
+        max-width: 420px;
+        margin: 2rem auto;
+        
         .card-header {
-             background-color: transparent;
-             img {
-                // If the logo is an img tag in the header
-                display: none; // We might want to replace it or ensure it uses ours
-             }
-             // Add our logo via pseudo-element if needed, or rely on custom layout
-             &:before {
+            background-color: transparent;
+            border-bottom: none;
+            padding-top: 2.5rem;
+            text-align: center;
+            
+            &:before {
                 content: "";
                 display: block;
                 background-image: url('[[pix:theme|logo]]');
@@ -64,22 +273,539 @@ $body-bg: #f4f6f8;
                 background-position: center;
                 height: 80px;
                 width: 100%;
-                margin-bottom: 20px;
-             }
+                margin-bottom: 1rem;
+            }
+            
+            img {
+                display: none;
+            }
+            
+            h2 {
+                font-size: 1.25rem;
+                color: #64748B;
+                font-weight: 400;
+            }
+        }
+        
+        .card-body {
+            padding: 2rem 2.5rem 2.5rem;
         }
     }
     
-    // Hide "Cookies must be enabled" if it links to Moodle docs nicely?
-    // Usually it's fine, but let's hide "Moodle" text references via CSS if any specific classes exist.
+    // Hide Moodle branding on login
+    .logininfo a[href*="moodle.org"],
+    .tool_usertours-resettourcontainer {
+        display: none !important;
+    }
+    
+    // Style form inputs
+    .form-control {
+        border-radius: 8px;
+        border: 2px solid #E2E8F0;
+        padding: 0.875rem 1rem;
+        font-size: 1rem;
+        transition: $transition-base;
+        
+        &:focus {
+            border-color: $brand-color;
+            box-shadow: 0 0 0 4px rgba($brand-color, 0.1);
+        }
+    }
+    
+    .btn-primary {
+        width: 100%;
+        padding: 0.875rem;
+        font-size: 1rem;
+        margin-top: 0.5rem;
+    }
+    
+    // Links
+    .login-form-forgotpassword,
+    .login-signup {
+        text-align: center;
+        margin-top: 1rem;
+        
+        a {
+            color: $brand-color;
+            font-weight: 500;
+            
+            &:hover {
+                color: $brand-color-dark;
+            }
+        }
+    }
 }
 
+// ==============================================================================
 // Footer
+// ==============================================================================
 #page-footer {
-    background-color: darken($brand-color, 2%);
-    color: #ccc;
+    background-color: #0F172A;
+    color: #94A3B8;
+    padding: 2rem 0;
+    margin-top: 3rem;
+    
+    a {
+        color: $brand-color-light;
+        transition: $transition-base;
+        
+        &:hover {
+            color: #FFFFFF;
+        }
+    }
     
     .footer-content {
         text-align: center;
-        padding: 20px;
+        
+        p {
+            margin: 0;
+        }
     }
+}
+
+// ==============================================================================
+// Hide Moodle Branding
+// ==============================================================================
+.tool_usertours-resettourcontainer,
+a[href*="moodle.org"],
+a[href*="docs.moodle.org"],
+.moodlelogo,
+.poweredby,
+.footer-content-debugging,
+.sitelink {
+    display: none !important;
+}
+
+// ==============================================================================
+// Forms
+// ==============================================================================
+.form-control {
+    border-radius: $border-radius-base;
+    border: 2px solid #E2E8F0;
+    padding: 0.625rem 0.875rem;
+    transition: $transition-base;
+    font-size: 0.95rem;
+    
+    &:focus {
+        border-color: $brand-color;
+        box-shadow: 0 0 0 3px rgba($brand-color, 0.15);
+        outline: none;
+    }
+    
+    &::placeholder {
+        color: #94A3B8;
+    }
+}
+
+.form-label,
+label {
+    font-weight: 500;
+    color: #334155;
+    margin-bottom: 0.375rem;
+}
+
+// Custom select
+.form-select,
+select.form-control {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 16px 12px;
+    padding-right: 2.5rem;
+}
+
+// ==============================================================================
+// Alerts
+// ==============================================================================
+.alert {
+    border-radius: $border-radius-base;
+    border: none;
+    padding: 1rem 1.25rem;
+    
+    &.alert-success {
+        background-color: rgba($success, 0.1);
+        color: darken($success, 20%);
+    }
+    
+    &.alert-warning {
+        background-color: rgba($warning, 0.1);
+        color: darken($warning, 25%);
+    }
+    
+    &.alert-danger {
+        background-color: rgba($danger, 0.1);
+        color: darken($danger, 15%);
+    }
+    
+    &.alert-info {
+        background-color: rgba($info, 0.1);
+        color: darken($info, 20%);
+    }
+}
+
+// ==============================================================================
+// Progress Bars
+// ==============================================================================
+.progress {
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: #E2E8F0;
+    
+    .progress-bar {
+        background: linear-gradient(90deg, $brand-color 0%, $brand-color-light 100%);
+        border-radius: 4px;
+    }
+}
+
+// ==============================================================================
+// Tables
+// ==============================================================================
+.table {
+    border-radius: $border-radius-base;
+    overflow: hidden;
+    
+    thead {
+        background-color: #F8FAFC;
+        
+        th {
+            font-weight: 600;
+            color: #334155;
+            border-bottom: 2px solid #E2E8F0;
+            padding: 0.875rem 1rem;
+        }
+    }
+    
+    tbody {
+        td {
+            padding: 0.875rem 1rem;
+            border-bottom: 1px solid #F1F5F9;
+            vertical-align: middle;
+        }
+        
+        tr:hover {
+            background-color: #F8FAFC;
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+    }
+}
+
+// ==============================================================================
+// Sidebar / Drawer
+// ==============================================================================
+.drawer,
+#nav-drawer {
+    background-color: #FFFFFF;
+    border-right: 1px solid #E2E8F0;
+    
+    .list-group-item {
+        border: none;
+        padding: 0.625rem 1rem;
+        color: #475569;
+        transition: $transition-base;
+        border-radius: $border-radius-sm;
+        margin: 0.125rem 0.5rem;
+        
+        &:hover {
+            background-color: #F1F5F9;
+            color: $brand-color;
+        }
+        
+        &.active {
+            background-color: rgba($brand-color, 0.1);
+            color: $brand-color;
+            font-weight: 500;
+        }
+    }
+}
+
+// ==============================================================================
+// Breadcrumbs
+// ==============================================================================
+.breadcrumb {
+    background-color: transparent;
+    padding: 0;
+    margin-bottom: 1rem;
+    
+    .breadcrumb-item {
+        color: #64748B;
+        font-size: 0.875rem;
+        
+        a {
+            color: #64748B;
+            text-decoration: none;
+            
+            &:hover {
+                color: $brand-color;
+            }
+        }
+        
+        &.active {
+            color: #1E293B;
+            font-weight: 500;
+        }
+        
+        + .breadcrumb-item::before {
+            content: "›";
+            color: #CBD5E1;
+        }
+    }
+}
+
+// ==============================================================================
+// Pagination
+// ==============================================================================
+.pagination {
+    .page-item {
+        .page-link {
+            border-radius: $border-radius-sm;
+            border: 1px solid #E2E8F0;
+            color: #475569;
+            margin: 0 0.125rem;
+            transition: $transition-base;
+            
+            &:hover {
+                background-color: #F1F5F9;
+                border-color: #CBD5E1;
+            }
+        }
+        
+        &.active .page-link {
+            background-color: $brand-color;
+            border-color: $brand-color;
+            color: #FFFFFF;
+        }
+    }
+}
+
+// ==============================================================================
+// Badges
+// ==============================================================================
+.badge {
+    font-weight: 500;
+    padding: 0.35em 0.65em;
+    border-radius: $border-radius-sm;
+}
+
+.badge-primary,
+.bg-primary {
+    background-color: $brand-color !important;
+}
+
+.badge-success,
+.bg-success {
+    background-color: $success !important;
+}
+
+.badge-warning,
+.bg-warning {
+    background-color: $warning !important;
+}
+
+.badge-danger,
+.bg-danger {
+    background-color: $danger !important;
+}
+
+// ==============================================================================
+// Modals
+// ==============================================================================
+.modal {
+    .modal-content {
+        border-radius: $border-radius-lg;
+        border: none;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+    
+    .modal-header {
+        border-bottom: 1px solid #F1F5F9;
+        padding: 1.25rem 1.5rem;
+        
+        .modal-title {
+            font-weight: 600;
+        }
+    }
+    
+    .modal-body {
+        padding: 1.5rem;
+    }
+    
+    .modal-footer {
+        border-top: 1px solid #F1F5F9;
+        padding: 1rem 1.5rem;
+    }
+}
+
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+}
+
+// ==============================================================================
+// Dropdowns
+// ==============================================================================
+.dropdown-menu {
+    border-radius: $border-radius-base;
+    border: 1px solid #E2E8F0;
+    box-shadow: $box-shadow-lg;
+    padding: 0.5rem;
+    
+    .dropdown-item {
+        border-radius: $border-radius-sm;
+        padding: 0.5rem 0.75rem;
+        color: #475569;
+        transition: $transition-base;
+        
+        &:hover {
+            background-color: #F1F5F9;
+            color: $brand-color;
+        }
+        
+        &.active,
+        &:active {
+            background-color: rgba($brand-color, 0.1);
+            color: $brand-color;
+        }
+    }
+    
+    .dropdown-divider {
+        border-color: #F1F5F9;
+    }
+}
+
+// ==============================================================================
+// Animations
+// ==============================================================================
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.card,
+.alert,
+.modal.show .modal-dialog {
+    animation: fadeIn 0.3s ease;
+}
+
+// ==============================================================================
+// Mobile Responsive
+// ==============================================================================
+@media (max-width: 768px) {
+    .navbar-brand {
+        width: 140px;
+        height: 36px;
+    }
+    
+    #page-login-index {
+        padding: 1rem;
+        
+        .card {
+            margin: 0;
+            border-radius: $border-radius-lg;
+            
+            .card-header:before {
+                height: 60px;
+            }
+            
+            .card-body {
+                padding: 1.5rem;
+            }
+        }
+    }
+    
+    .card {
+        border-radius: $border-radius-base;
+    }
+    
+    #page-footer {
+        padding: 1.5rem 0;
+    }
+}
+
+// ==============================================================================
+// Print Styles
+// ==============================================================================
+@media print {
+    .navbar,
+    #page-footer,
+    .drawer,
+    .nav-drawer {
+        display: none !important;
+    }
+    
+    body {
+        background: #FFFFFF !important;
+    }
+    
+    .card {
+        box-shadow: none !important;
+        border: 1px solid #000 !important;
+    }
+}
+
+// ==============================================================================
+// Accessibility
+// ==============================================================================
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+:focus-visible {
+    outline: 2px solid $brand-color;
+    outline-offset: 2px;
+}
+
+// Reduced motion preference
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+// ==============================================================================
+// Dark Mode Support (Optional)
+// ==============================================================================
+@media (prefers-color-scheme: dark) {
+    // Uncomment to enable automatic dark mode
+    // body {
+    //     background-color: #0F172A;
+    //     color: #E2E8F0;
+    // }
+    // 
+    // .card {
+    //     background-color: #1E293B;
+    //     border-color: #334155;
+    // }
 }

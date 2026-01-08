@@ -1,52 +1,305 @@
+# ==============================================================================
+# Moodle Backend - Production Docker Compose
+# Optimized for Coolify/VPS Deployment with Health Checks
+# ==============================================================================
+
 version: '3.8'
 
-services:
-  app:
-    build: .
-    container_name: moodle_app
-    ports:
-      - "8080:80"
-    volumes:
-      - moodle_data:/var/www/moodledata
-      - .:/var/www/html
-    environment:
-      - MOODLE_DBTYPE=pgsql
-      - MOODLE_DBHOST=db
-      - MOODLE_DBNAME=moodle
-      - MOODLE_DBUSER=moodleuser
-      - MOODLE_DBPASSWORD=moodlepass
-      - MOODLE_DOCKER_DEMO_PERFORMANCE=1
-    depends_on:
-      - db
-      - redis
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost/healthcheck.php"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-    restart: always
+# ==============================================================================
+# Common Configuration
+# ==============================================================================
+x-common-env: &common-env
+  TZ: ${TIMEZONE:-UTC}
 
-  db:
-    image: postgres:14-alpine
-    container_name: moodle_db
+x-healthcheck-defaults: &healthcheck-defaults
+  interval: 30s
+  timeout: 10s
+  retries: 5
+  start_period: 120s
+
+# ==============================================================================
+# Services
+# ==============================================================================
+services:
+
+  # ============================================================================
+  # Moodle Application
+  # ============================================================================
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ${DOCKER_IMAGE_NAME:-moodle-backend}:${DOCKER_IMAGE_TAG:-latest}
+    container_name: ${COMPOSE_PROJECT_NAME:-moodle}_app
+    restart: unless-stopped
+
+    ports:
+      - "${APP_PORT:-8080}:80"
+
+    volumes:
+      # Moodle data directory (persistent)
+      - moodle_data:${MOODLEDATA_PATH:-/var/www/moodledata}
+      # Log directory
+      - moodle_logs:/var/log/moodle
+      # PHP custom config (optional override)
+      - ./php-custom.ini:/usr/local/etc/php/conf.d/zz-custom.ini:ro
+
     environment:
-      - POSTGRES_DB=moodle
-      - POSTGRES_USER=moodleuser
-      - POSTGRES_PASSWORD=moodlepass
+      <<: *common-env
+      # Database Configuration
+      MOODLE_DBTYPE: ${MOODLE_DBTYPE:-pgsql}
+      MOODLE_DBHOST: ${MOODLE_DBHOST:-db}
+      MOODLE_DBNAME: ${MOODLE_DBNAME:-moodle}
+      MOODLE_DBUSER: ${MOODLE_DBUSER:-moodleuser}
+      MOODLE_DBPASSWORD: ${MOODLE_DBPASSWORD:-moodlepass}
+      MOODLE_DBPORT: ${MOODLE_DBPORT:-5432}
+      MOODLE_DBPREFIX: ${MOODLE_DBPREFIX:-mdl_}
+
+      # Site Configuration
+      MOODLE_WWWROOT: ${MOODLE_WWWROOT:-http://localhost:8080}
+      MOODLEDATA_PATH: ${MOODLEDATA_PATH:-/var/www/moodledata}
+      MOODLE_FULLNAME: ${MOODLE_FULLNAME:-My Learning Platform}
+      MOODLE_SHORTNAME: ${MOODLE_SHORTNAME:-LMS}
+
+      # Admin Configuration
+      MOODLE_ADMIN: ${MOODLE_ADMIN:-admin}
+      MOODLE_ADMIN_PASSWORD: ${MOODLE_ADMIN_PASSWORD:-Admin123!}
+      MOODLE_ADMIN_EMAIL: ${MOODLE_ADMIN_EMAIL:-admin@example.com}
+
+      # Redis Configuration
+      REDIS_HOST: ${REDIS_HOST:-redis}
+      REDIS_PORT: ${REDIS_PORT:-6379}
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-}
+
+      # SSL/Proxy Configuration
+      MOODLE_SSL_PROXY: ${MOODLE_SSL_PROXY:-false}
+
+      # PHP Configuration
+      PHP_MEMORY_LIMIT: ${PHP_MEMORY_LIMIT:-512M}
+      PHP_MAX_EXECUTION_TIME: ${PHP_MAX_EXECUTION_TIME:-300}
+      PHP_MAX_INPUT_VARS: ${PHP_MAX_INPUT_VARS:-5000}
+      PHP_UPLOAD_MAX_FILESIZE: ${PHP_UPLOAD_MAX_FILESIZE:-512M}
+      PHP_POST_MAX_SIZE: ${PHP_POST_MAX_SIZE:-512M}
+
+      # Brand Configuration
+      BRAND_NAME: ${BRAND_NAME:-MyBrand}
+
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "-s", "-o", "/dev/null", "-w", "%{http_code}", "http://localhost/healthcheck.php" ]
+      <<: *healthcheck-defaults
+
+    networks:
+      - moodle_network
+
+    labels:
+      # Coolify labels
+      - "coolify.managed=true"
+      - "coolify.name=${COMPOSE_PROJECT_NAME:-moodle}"
+      # Traefik labels (if using Traefik proxy)
+      - "traefik.enable=true"
+      - "traefik.http.routers.moodle.rule=Host(`${DOMAIN:-localhost}`)"
+      - "traefik.http.routers.moodle.entrypoints=websecure"
+      - "traefik.http.routers.moodle.tls.certresolver=letsencrypt"
+      - "traefik.http.services.moodle.loadbalancer.server.port=80"
+
+  # ============================================================================
+  # PostgreSQL Database
+  # ============================================================================
+  db:
+    image: postgres:15-alpine
+    container_name: ${COMPOSE_PROJECT_NAME:-moodle}_db
+    restart: unless-stopped
+
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      # Custom PostgreSQL configuration (optional)
+      - ./postgres-custom.conf:/etc/postgresql/postgresql.conf:ro
+
+    environment:
+      <<: *common-env
+      POSTGRES_DB: ${MOODLE_DBNAME:-moodle}
+      POSTGRES_USER: ${MOODLE_DBUSER:-moodleuser}
+      POSTGRES_PASSWORD: ${MOODLE_DBPASSWORD:-moodlepass}
+      # Performance tuning
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=en_US.UTF-8"
+
+    # PostgreSQL performance tuning
+    command:
+      - "postgres"
+      - "-c"
+      - "max_connections=200"
+      - "-c"
+      - "shared_buffers=256MB"
+      - "-c"
+      - "effective_cache_size=768MB"
+      - "-c"
+      - "maintenance_work_mem=128MB"
+      - "-c"
+      - "checkpoint_completion_target=0.9"
+      - "-c"
+      - "wal_buffers=16MB"
+      - "-c"
+      - "default_statistics_target=100"
+      - "-c"
+      - "random_page_cost=1.1"
+      - "-c"
+      - "effective_io_concurrency=200"
+      - "-c"
+      - "work_mem=4MB"
+      - "-c"
+      - "min_wal_size=1GB"
+      - "-c"
+      - "max_wal_size=4GB"
+      - "-c"
+      - "max_worker_processes=4"
+      - "-c"
+      - "max_parallel_workers_per_gather=2"
+      - "-c"
+      - "max_parallel_workers=4"
+      - "-c"
+      - "log_timezone=UTC"
+      - "-c"
+      - "timezone=UTC"
+
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U moodleuser -d moodle"]
+      test: [ "CMD-SHELL", "pg_isready -U ${MOODLE_DBUSER:-moodleuser} -d ${MOODLE_DBNAME:-moodle}" ]
       interval: 10s
       timeout: 5s
       retries: 5
-    restart: always
+      start_period: 30s
 
+    networks:
+      - moodle_network
+
+    labels:
+      - "coolify.managed=true"
+
+  # ============================================================================
+  # Redis Cache & Session Store
+  # ============================================================================
   redis:
-    image: redis:alpine
-    container_name: moodle_redis
-    restart: always
+    image: redis:7-alpine
+    container_name: ${COMPOSE_PROJECT_NAME:-moodle}_redis
+    restart: unless-stopped
 
+    volumes:
+      - redis_data:/data
+
+    environment:
+      <<: *common-env
+
+    # Redis configuration for performance
+    command:
+      - "redis-server"
+      - "--appendonly"
+      - "yes"
+      - "--appendfsync"
+      - "everysec"
+      - "--maxmemory"
+      - "${REDIS_MAXMEMORY:-256mb}"
+      - "--maxmemory-policy"
+      - "allkeys-lru"
+      - "--tcp-keepalive"
+      - "300"
+      - "--timeout"
+      - "0"
+      - "--databases"
+      - "16"
+
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+    networks:
+      - moodle_network
+
+    labels:
+      - "coolify.managed=true"
+
+  # ============================================================================
+  # Moodle Cron Service (Alternative to supervisor-based cron)
+  # ============================================================================
+  cron:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ${DOCKER_IMAGE_NAME:-moodle-backend}:${DOCKER_IMAGE_TAG:-latest}
+    container_name: ${COMPOSE_PROJECT_NAME:-moodle}_cron
+    restart: unless-stopped
+
+    volumes:
+      - moodle_data:${MOODLEDATA_PATH:-/var/www/moodledata}
+      - moodle_logs:/var/log/moodle
+
+    environment:
+      <<: *common-env
+      MOODLE_DBTYPE: ${MOODLE_DBTYPE:-pgsql}
+      MOODLE_DBHOST: ${MOODLE_DBHOST:-db}
+      MOODLE_DBNAME: ${MOODLE_DBNAME:-moodle}
+      MOODLE_DBUSER: ${MOODLE_DBUSER:-moodleuser}
+      MOODLE_DBPASSWORD: ${MOODLE_DBPASSWORD:-moodlepass}
+      MOODLE_DBPORT: ${MOODLE_DBPORT:-5432}
+      MOODLE_DBPREFIX: ${MOODLE_DBPREFIX:-mdl_}
+      MOODLE_WWWROOT: ${MOODLE_WWWROOT:-http://localhost:8080}
+      MOODLEDATA_PATH: ${MOODLEDATA_PATH:-/var/www/moodledata}
+      REDIS_HOST: ${REDIS_HOST:-redis}
+      REDIS_PORT: ${REDIS_PORT:-6379}
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-}
+      MOODLE_SSL_PROXY: ${MOODLE_SSL_PROXY:-false}
+
+    # Run cron every minute
+    entrypoint: [ "/bin/bash", "-c" ]
+    command:
+      - |
+        while true; do
+          echo "[$(date)] Running Moodle cron..."
+          php /var/www/html/public/admin/cli/cron.php >> /var/log/moodle/cron.log 2>&1 || true
+          sleep 60
+        done
+
+    depends_on:
+      app:
+        condition: service_healthy
+
+    networks:
+      - moodle_network
+
+    labels:
+      - "coolify.managed=true"
+
+# ==============================================================================
+# Networks
+# ==============================================================================
+networks:
+  moodle_network:
+    driver: bridge
+    name: ${COMPOSE_PROJECT_NAME:-moodle}_network
+
+# ==============================================================================
+# Volumes
+# ==============================================================================
 volumes:
   moodle_data:
+    driver: local
+    name: ${COMPOSE_PROJECT_NAME:-moodle}_data
+
+  moodle_logs:
+    driver: local
+    name: ${COMPOSE_PROJECT_NAME:-moodle}_logs
+
   postgres_data:
+    driver: local
+    name: ${COMPOSE_PROJECT_NAME:-moodle}_postgres
+
+  redis_data:
+    driver: local
+    name: ${COMPOSE_PROJECT_NAME:-moodle}_redis

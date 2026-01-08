@@ -1,0 +1,305 @@
+{
+  "_comment": "Moodle White-Label Configuration File",
+  "title": "Moodle White-Label Configuration",
+  "description": "Complete configuration for white-labeling your Moodle LMS backend",
+  "version": "1.0.0",
+  
+  "brand": {
+    "name": "MyBrand",
+    "display_name": "MyBrand Learning Platform",
+    "short_name": "MB",
+    "tagline": "Empowering Education Through Technology",
+    "description": "A comprehensive learning management system designed for modern education.",
+    
+    "legal": {
+      "company_name": "MyBrand Education Inc.",
+      "company_address": "123 Education Street, Learning City, LC 12345",
+      "company_email": "legal@mybrand.com",
+      "company_phone": "+1 (555) 123-4567",
+      "terms_of_service_url": "https://mybrand.com/terms",
+      "privacy_policy_url": "https://mybrand.com/privacy",
+      "copyright_text": "© 2024 MyBrand Education Inc. All rights reserved."
+    }
+  },
+
+  "logo": {
+    "primary": {
+      "file": "logo.png",
+      "path": "public/theme/masbrand/pix/logo.png",
+      "width": 200,
+      "height": 50,
+      "alt_text": "MyBrand Logo"
+    },
+    "favicon": {
+      "file": "favicon.ico",
+      "path": "public/theme/masbrand/pix/favicon.ico",
+      "sizes": "32x32"
+    },
+    "apple_touch_icon": {
+      "file": "apple-touch-icon.png",
+      "path": "public/theme/masbrand/pix/apple-touch-icon.png",
+      "sizes": "180x180"
+    },
+    "compact": {
+      "file": "logo-compact.png",
+      "path": "public/theme/masbrand/pix/logo-compact.png",
+      "description": "Small version of logo for mobile/nav",
+      "width": 40,
+      "height": 40
+    },
+    "email_header": {
+      "file": "email-logo.png",
+      "path": "public/theme/masbrand/pix/email-logo.png",
+      "description": "Logo used in email templates"
+    },
+    "login_page": {
+      "file": "login-logo.png",
+      "path": "public/theme/masbrand/pix/login-logo.png",
+      "description": "Larger logo displayed on login page"
+    }
+  },
+
+  "colors": {
+    "primary": {
+      "main": "#2563EB",
+      "light": "#3B82F6",
+      "dark": "#1D4ED8",
+      "contrast_text": "#FFFFFF"
+    },
+    "secondary": {
+      "main": "#10B981",
+      "light": "#34D399",
+      "dark": "#059669",
+      "contrast_text": "#FFFFFF"
+    },
+    "accent": {
+      "main": "#8B5CF6",
+      "light": "#A78BFA",
+      "dark": "#7C3AED",
+      "contrast_text": "#FFFFFF"
+    },
+    "background": {
+      "default": "#FFFFFF",
+      "paper": "#F8FAFC",
+      "dark": "#0F172A"
+    },
+    "text": {
+      "primary": "#1E293B",
+      "secondary": "#64748B",
+      "disabled": "#CBD5E1",
+      "inverse": "#FFFFFF"
+    },
+    "status": {
+      "success": "#22C55E",
+      "warning": "#F59E0B",
+      "error": "#EF4444",
+      "info": "#3B82F6"
+    },
+    "navbar": {
+      "background": "#1E293B",
+      "text": "#FFFFFF",
+      "hover": "#334155"
+    },
+    "footer": {
+      "background": "#0F172A",
+      "text": "#94A3B8",
+      "link": "#3B82F6"
+    },
+    "login_page": {
+      "background": "#1E293B",
+      "card_background": "#FFFFFF",
+      "gradient_start": "#2563EB",
+      "gradient_end": "#7C3AED"
+    }
+  },
+
+  "typography": {
+    "font_family": "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+    "heading_font": "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+    "google_fonts_url": "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap",
+    "base_font_size": "16px",
+    "heading_weights": {
+      "h1": "700",
+      "h2": "600",
+      "h3": "600",
+      "h4": "500",
+      "h5": "500",
+      "h6": "500"
+    }
+  },
+
+  "website": {
+    "url": "https://mybrand.com",
+    "lms_url": "https://lms.mybrand.com",
+    "support_url": "https://support.mybrand.com",
+    "docs_url": "https://docs.mybrand.com",
+    "blog_url": "https://blog.mybrand.com",
+    "status_page_url": "https://status.mybrand.com"
+  },
+
+  "contact": {
+    "support_email": "support@mybrand.com",
+    "sales_email": "sales@mybrand.com",
+    "admin_email": "admin@mybrand.com",
+    "noreply_email": "noreply@mybrand.com",
+    "support_phone": "+1 (555) 123-4567",
+    "help_desk_hours": "Monday - Friday, 9:00 AM - 6:00 PM EST"
+  },
+
+  "social_media": {
+    "facebook": "https://facebook.com/mybrand",
+    "twitter": "https://twitter.com/mybrand",
+    "linkedin": "https://linkedin.com/company/mybrand",
+    "instagram": "https://instagram.com/mybrand",
+    "youtube": "https://youtube.com/@mybrand",
+    "github": "https://github.com/mybrand"
+  },
+
+  "mobile_app": {
+    "ios_app_store_url": "https://apps.apple.com/app/mybrand-lms/id123456789",
+    "google_play_url": "https://play.google.com/store/apps/details?id=com.mybrand.lms",
+    "huawei_app_gallery_url": "https://appgallery.huawei.com/app/C123456789",
+    "package_name": "com.mybrand.lms",
+    "bundle_id": "com.mybrand.lms",
+    "app_scheme": "mybrandlms://",
+    "deep_link_domain": "lms.mybrand.com",
+    "requires_login": true,
+    "default_site_url": "https://lms.mybrand.com"
+  },
+
+  "email_templates": {
+    "from_name": "MyBrand Learning",
+    "from_address": "noreply@mybrand.com",
+    "reply_to": "support@mybrand.com",
+    "header_color": "#2563EB",
+    "footer_text": "© 2024 MyBrand Education Inc. All rights reserved.",
+    "social_links_in_footer": true,
+    "custom_templates": {
+      "welcome": "email/welcome.html",
+      "password_reset": "email/password-reset.html",
+      "course_enrollment": "email/course-enrollment.html"
+    }
+  },
+
+  "seo": {
+    "site_title": "MyBrand Learning Platform",
+    "site_description": "Empower your learning journey with MyBrand - a comprehensive LMS platform for students and educators.",
+    "keywords": ["learning", "education", "LMS", "online courses", "MyBrand"],
+    "og_image": "public/theme/masbrand/pix/og-image.png",
+    "twitter_card": "summary_large_image",
+    "twitter_handle": "@mybrand"
+  },
+
+  "features": {
+    "show_moodle_branding": false,
+    "show_moodle_docs_links": false,
+    "show_powered_by": false,
+    "custom_footer": true,
+    "custom_login_page": true,
+    "hide_language_selector_on_login": false,
+    "hide_create_account_link": false,
+    "hide_forgot_password_link": false,
+    "enable_guest_access": false,
+    "enable_self_registration": true,
+    "enable_mobile_app_banner": true,
+    "enable_cookie_consent": true,
+    "enable_maintenance_mode": false
+  },
+
+  "locale": {
+    "default_language": "en",
+    "available_languages": ["en", "es", "fr", "de", "ar"],
+    "default_timezone": "UTC",
+    "date_format": "MMMM d, yyyy",
+    "time_format": "h:mm a"
+  },
+
+  "analytics": {
+    "google_analytics_id": "",
+    "google_tag_manager_id": "",
+    "facebook_pixel_id": "",
+    "enable_user_tracking": false
+  },
+
+  "security": {
+    "password_min_length": 8,
+    "password_require_uppercase": true,
+    "password_require_lowercase": true,
+    "password_require_number": true,
+    "password_require_special": true,
+    "session_timeout_minutes": 480,
+    "max_login_attempts": 5,
+    "lockout_duration_minutes": 15,
+    "enable_two_factor_auth": true,
+    "allowed_login_domains": []
+  },
+
+  "files": {
+    "max_upload_size_mb": 512,
+    "allowed_file_types": [
+      "pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx",
+      "jpg", "jpeg", "png", "gif", "svg",
+      "mp4", "webm", "mp3", "wav",
+      "zip", "rar", "7z"
+    ],
+    "video_max_size_mb": 2048,
+    "image_max_size_mb": 50
+  },
+
+  "course": {
+    "default_format": "topics",
+    "default_sections": 10,
+    "enable_completion_tracking": true,
+    "enable_badges": true,
+    "enable_competencies": true,
+    "enable_certificates": true,
+    "enable_gamification": false
+  },
+
+  "theme": {
+    "name": "masbrand",
+    "parent": "boost",
+    "custom_css_file": "public/theme/masbrand/scss/post.scss",
+    "preset": "default.scss",
+    "background_image": "",
+    "login_background_image": "",
+    "navbar_height": "60px",
+    "sidebar_width": "285px",
+    "border_radius": "8px",
+    "shadow": "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+    "drawer_width": "285px"
+  },
+
+  "string_replacements": {
+    "Moodle": "MyBrand",
+    "moodle": "mybrand",
+    "MOODLE": "MYBRAND",
+    "Moodle.org": "mybrand.com",
+    "moodle.org": "mybrand.com",
+    "Moodle Docs": "MyBrand Help Center",
+    "Moodle Mobile": "MyBrand App"
+  },
+
+  "deployment": {
+    "environment": "production",
+    "debug_mode": false,
+    "cache_enabled": true,
+    "cron_frequency_seconds": 60,
+    "maintenance_message": "We are currently performing scheduled maintenance. Please check back soon.",
+    "admin_username": "admin",
+    "admin_email": "admin@mybrand.com"
+  },
+
+  "docker": {
+    "compose_project_name": "mybrand",
+    "image_name": "mybrand-lms",
+    "image_tag": "latest",
+    "app_port": 8080,
+    "domain": "lms.mybrand.com",
+    "ssl_enabled": true,
+    "redis_enabled": true,
+    "postgres_version": "15-alpine",
+    "redis_version": "7-alpine",
+    "php_memory_limit": "512M"
+  }
+}

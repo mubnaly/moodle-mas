@@ -1,4 +1,9 @@
 <?php
+// ==============================================================================
+// MasBrand Theme Configuration
+// Production-ready Moodle theme with white-label support
+// ==============================================================================
+
 defined('MOODLE_INTERNAL') || die();
 
 $THEME->name = 'masbrand';
@@ -10,14 +15,22 @@ $THEME->yuicssmodules = [];
 $THEME->rendererfactory = 'theme_overridden_renderer_factory';
 $THEME->requiredblocks = '';
 $THEME->addblockposition = BLOCK_ADDBLOCK_POSITION_FLATNAV;
+$THEME->haseditswitch = true;
+$THEME->usescourseindex = true;
 
-// Register our custom renderer class
-// The class file should be in classes/output/core_renderer.php
-// which maps to \theme_masbrand\output\core_renderer
-// But in config.php for themes, we instruct Moodle to use our renderer.
-// Actually, 'theme_overridden_renderer_factory' will look for renderers.php or classes.
-// With 'classes' autoloading, we need namespace \theme_masbrand\output;
-
+// SCSS configuration
 $THEME->scss = function($theme) {
     return theme_masbrand_get_main_scss_content($theme);
 };
+
+// Pre-SCSS callback for variables
+$THEME->prescsscallback = 'theme_masbrand_get_pre_scss';
+
+// Extra SCSS callback
+$THEME->extrascsscallback = 'theme_masbrand_get_extra_scss';
+
+// Icon system
+$THEME->iconsystem = \core\output\icon_system::FONTAWESOME;
+
+// Enable removal of all blocks (for mobile-friendly layouts)
+$THEME->removedprimarynavitems = [];
