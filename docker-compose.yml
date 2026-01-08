@@ -29,8 +29,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    # image: ${DOCKER_IMAGE_NAME:-moodle-backend}:${DOCKER_IMAGE_TAG:-latest}
-    image: moodle-backend:latest
+    image: ${DOCKER_IMAGE_NAME:-moodle-backend}:${DOCKER_IMAGE_TAG:-latest}
     container_name: ${COMPOSE_PROJECT_NAME:-moodle}_app
     restart: unless-stopped
 
